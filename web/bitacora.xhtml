@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>BITACORA</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+        <h:outputScript name="js/alertify.js"/>
+    </h:head>
+    <h:body>
+        <b:navBar class="lead"  inverse="true" brand="GL" brandHref="bienvenidos.xhtml" > 
+
+           <b:navbarLinks>
+
+                <b:navLink value="Usuarios"  style=" color: white" iconAwesome="fa-user"  iconAlign="right" href="usuarios.xhtml"></b:navLink>
+
+                
+                    
+                    <b:dropMenu  iconAwesome="fa-archive" value="Caso"   iconAlign="right">
+                        <b:navLink value="Registrar Casos" iconAwesome="fa-folder-open" href="caso.xhtml"></b:navLink>
+                        <b:navLink value="Casos" iconAwesome="fa-book" href="listac.xhtml">
+                           
+                        </b:navLink>
+                    </b:dropMenu>
+                        
+                        
+                     <b:dropMenu value="Cliente"  iconAwesome="fa-id-card-o" iconAlign="right">
+                        <b:navLink value="Nuevo Cliente " href="cliente.xhtml" iconAwesome="fa-address-card-o"></b:navLink>
+                        <b:navLink value="Poder" iconAwesome="fa-gavel" href="poder.xhtml"></b:navLink>
+                        <b:navLink value="Cartera de Clientes" iconAwesome="fa-address-book-o" href="listacli.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                        
+                       
+                <b:dropMenu  iconAwesome="fa-university" value="Bufete"   iconAlign="right" >
+                        <b:navLink value="Nuevo Colaborador " iconAwesome="fa-id-badge" href="colaborador.xhtml"></b:navLink>
+                        <b:navLink value="Registro Colaboradores" iconAwesome="fa-id-badge" href="listacol.xhtml"></b:navLink>
+                        <b:navLink value="Asignar Colaborador" iconAwesome="fa-suitcase" href="colcaso.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                
+                <b:navLink value="Calendario" iconAwesome="fa-calendar " href="calendario.xhtml" iconAlign="right"></b:navLink>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+
+            </form>
+
+
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink value="Salir" href="index.xhtml">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </b:navLink>
+
+            </b:navbarLinks>
+        </b:navBar>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Registrar un nuevo Avance</h2>
+                    <h:form id="miFormulario">
+                        <h:panelGroup layout="block" styleClass="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                            <h:messages/>
+                        </h:panelGroup>
+                        <h:panelGrid columns="4" styleClass="table">
+                            
+                           
+                            
+                            <h:outputLabel for="referencia" value="Caso a asignar:"/>
+                           
+                            <b:selectOneMenu   id="codigoReferencia"  value="#{bitacoraBean.avance.referencia}">
+                                <f:selectItem itemLabel="Seleccione el caso a asignar" itemValue=""/> 
+                                <f:selectItems var="lista" value="#{bitacoraBean.listaCasos}"
+                                               itemLabel="#{lista.tituloCaso}" itemValue="#{lista.referencia}"/>
+                            </b:selectOneMenu>
+                            <h:outputLabel for="idColaborador" value="Colaborador:"/>
+                            <h:selectOneMenu class="form-control" id="codigoColaborador" value="#{bitacoraBean.avance.idColaborador}">
+                                <f:selectItem itemLabel="Seleccione el caso a asignar" itemValue=""/> 
+                                <f:selectItems var="lista" value="#{bitacoraBean.listaColaboradores}"
+                                               itemLabel="#{lista.nombre}" itemValue="#{lista}"/>
+                            </h:selectOneMenu>
+                          
+                                                                                                               
+                            <h:outputLabel for="avance" value="Avance:"/>
+                            <h:inputTextarea id="avance" value="#{bitacoraBean.avance.detalle}" required="true" styleClass="form-control"
+                                             requiredMessage=" debes ingresar Informacion del avance" validatorMessage="el avance debe tener caracteres validos" 
+                                             />
+
+                            <h:outputLabel for="fecha" value="Fecha:"/>
+                            <b:dateTimePicker mode="toggle-icon" showWeek="true" value="#{bitacoraBean.avance.fecha}" required="true" 
+                                           label-col-md="3" col-md="6" format="DD/MM/YYYY"  requiredMessage="Debes ingresar la fecha del evento"/>
+
+                            <h:outputLabel value="Fecha actual:"/>
+                            <p:clock />
+
+                        </h:panelGrid>
+                        <p:commandButton  value="Guardar" styleClass="btn btn-success"
+                                          action="#{bitacoraBean.guardarAvance()}" style="margin-right:10px"/>
+                        <p:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
+                    </h:form>
+                </div>
+            </div>
+           
+            </div>
+        
+        <h:outputScript>
+            <c:if test = "#{not empty flash.exito}" >
+                alertify.success('#{flash.exito}');
+            </c:if>
+            function confirmarEliminacion(){
+            return confirm("Estas seguro que desea eliminar este registro?");
+            }
+        </h:outputScript>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+        <script>
+            $('#codigoReferencia').select2();
+            $('#codigoColaborador').select2();
+            </script>
+
+    </h:body>
+</html>

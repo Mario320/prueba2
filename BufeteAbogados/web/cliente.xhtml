@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>CLIENTES</title>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+        <h:outputScript name="js/alertify.js"/>
+    </h:head>
+    <h:body>
+        <b:navBar class="lead"  inverse="true" > 
+
+            <b:navbarLinks   >
+
+                <b:navLink   value="Bufete Abogados 'Gómez Larios'"  href="bienvenidos.xhtml"></b:navLink>
+
+                <b:navLink value="Usuarios"  style=" color: white" iconAwesome="fa-user" href="usuarios.xhtml"></b:navLink>
+
+                <b:dropMenu value="Formularios" iconAwesome="fa-id-card-o ">
+                    <b:navLink value="Bitacora" href="bitacora.xhtml"></b:navLink>
+                    <b:navLink value="Caso" href="caso.xhtml"></b:navLink>
+                    <b:navLink value="Cliente" href="cliente.xhtml"></b:navLink>
+                    <b:navLink value="Poder" href="poder.xhtml"></b:navLink>
+                    <b:dropMenu value="Colaborador"   iconAlign="right"  >
+                        <b:navLink value="Nuevo Colaborador " href="colaborador.xhtml"></b:navLink>
+                        <b:navLink value="Colaborador Caso" href="colcaso.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                </b:dropMenu>
+                <b:navLink value="Calendario" iconAwesome="fa-calendar " href="calendario.xhtml"></b:navLink>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+
+            </form>
+
+
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink value="Cerrar sesión" href="index.xhtml"></b:navLink>
+
+            </b:navbarLinks>
+        </b:navBar>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Registrar un nuevo cliente</h2>
+                    <h:form id="miFormulario">
+                        <h:panelGroup layout="block" styleClass="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                            <h:messages  />
+                        </h:panelGroup>
+                        <h:panelGrid columns="4" styleClass="table">
+                            <h:outputLabel for="idCliente" value="idCliente:"/>
+                            <h:inputText id="idCliente" styleClass="form-control" value="#{clienteBean.cliente.idCliente}" required="true" 
+                                         requiredMessage="Debes ingresar el id del cliente" validatorMessage="id no valido">
+                                <f:validateRegex pattern="CLI[0-9]{5}"/>
+                            </h:inputText>
+                            <h:outputLabel for="di" value="DI:"/>
+                            <h:inputText id="di" styleClass="form-control" value="#{clienteBean.cliente.di}" required="true" 
+                                         requiredMessage="Debes ingresar el DI del cliente" validatorMessage="id no valido">
+                                <f:validateRegex pattern="[0-9]{17}"/>
+                            </h:inputText>
+                            <h:outputLabel for="nombre" value="Nombres:"/>
+                            <h:inputText id="nombre" styleClass="form-control" value="#{clienteBean.cliente.nombre}" required="true" 
+                                         requiredMessage="Debes ingresar el nombre"/>
+                            <h:outputLabel for="apellidos" value="Apellidos:"/>
+                            <h:inputText id="apellidos" styleClass="form-control" value="#{clienteBean.cliente.apellido}" 
+                                         required="true" requiredMessage="Debes ingresar el apellido"/>
+                            <h:outputLabel for="representante" value="Representante Legal:"/>
+                            <h:inputText id="representante" styleClass="form-control" value="#{clienteBean.cliente.representanteLegal}" 
+                                         required="false" requiredMessage="Debes ingresar el representante legal"/>
+                            <h:outputLabel for="poder" value="idPoder:"/>
+                            <h:inputText id="poder" styleClass="form-control" value="#{clienteBean.cliente.idPoder}" required="true" 
+                                         requiredMessage="Debes ingresar el DI del cliente" validatorMessage="id no valido">
+                                <f:validateRegex pattern="POD[0-9]{5}"/>
+                            </h:inputText>
+                            <h:outputLabel for="correo" value="correo"/>
+                            <h:inputText id="correo" value="#{clienteBean.cliente.correo}" required="true" styleClass="form-control"
+                                         requiredMessage="Debes ingresar el correo" validatorMessage="el correo debe tener el formato correcto" 
+                                         converterMessage="La edad debe ser númerica">
+                                <f:validateRegex pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"/>
+                            </h:inputText>
+                            <h:outputLabel for="telefono" value="telefono"/>
+                            <h:inputText id="telefono" styleClass="form-control" value="#{clienteBean.cliente.telefono}" required="true" 
+                                         requiredMessage="Debes ingresar el telefono cliente" validatorMessage="telefono no valido">
+                                <f:validateRegex pattern="[267]{1}[0-9]{3}-[0-9]{4}"/>
+                            </h:inputText>
+                            <h:outputLabel for="direccion" value="Direccion:"/>
+                            <h:inputText id="direccion" styleClass="form-control" value="#{clienteBean.cliente.direccion}" 
+                                         required="true" requiredMessage="Debes ingresar la direccion"/>
+                        </h:panelGrid>
+                        <h:commandButton  value="Guardar" styleClass="btn btn-success"
+                                          action="#{clienteBean.guardarCliente()}" style="margin-right:10px"/>
+                        <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <h:form >
+                    <h:dataTable styleClass="table" value="#{clienteBean.listaClientes}" 
+                                 var="cli" rendered="#{clienteBean.listaClientes.size()>0}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="idCliente"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.idCliente}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="DI"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.di}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.nombre}"/>   
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Apellido"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.apellido}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Representante Legal"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.representanteLegal}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="id Poder"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.idPoder}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Correo electronico"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.correo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Telefono de contacto"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.telefono}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="direccion"/>
+                            </f:facet>
+                            <h:outputText value="#{cli.direccion}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Operaciones"/>
+                            </f:facet>
+                          
+                            <h:commandButton value="Eliminar" styleClass="btn btn-danger" action="#{clienteBean.eliminarCliente()}"
+                                             onclick="return confirmarEliminacion();">
+                                <f:param name="idCliente" value="#{col.idCliente}"/>
+                            </h:commandButton>
+                            
+                              <p:commandButton update=":miFormulario" value="Modificar" styleClass="btn btn-info " >              
+                                  <f:setPropertyActionListener value="#{cli}" target="${clienteBean.cliente}" />
+                            </p:commandButton>
+                            
+                        </h:column>    
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+        <h:outputScript>
+            <c:if test = "#{not empty flash.exito}" >
+                alertify.success('#{flash.exito}');
+            </c:if>
+            function confirmarEliminacion(){
+            return confirm("Estas seguro que desea eliminar este registro?");
+            }
+        </h:outputScript>
+       
+      
+    </h:body>
+</html>

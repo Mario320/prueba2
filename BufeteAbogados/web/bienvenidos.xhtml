@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>BufeteAbogados</title>
+
+    </h:head>
+    <!-- Add 50px padding top to the body for the navbar -->
+    <h:body >
+     <b:navBar class="lead"  inverse="true" > 
+
+            <b:navbarLinks   >
+
+                <b:navLink   value="Bufete Abogados 'Gómez Larios'"  href="bienvenidos.xhtml"></b:navLink>
+
+                <b:navLink value="Usuarios"  style=" color: white" iconAwesome="fa-user" href="usuarios.xhtml"></b:navLink>
+
+                <b:dropMenu value="Formularios" iconAwesome="fa-id-card-o ">
+                    <b:navLink value="Bitacora" href="bitacora.xhtml"></b:navLink>
+                    <b:navLink value="Caso" href="caso.xhtml"></b:navLink>
+                    <b:navLink value="Cliente" href="cliente.xhtml"></b:navLink>
+                    <b:navLink value="Poder" href="poder.xhtml"></b:navLink>
+                    <b:dropMenu value="Colaborador"   iconAlign="right"  >
+                        <b:navLink value="Nuevo Colaborador " href="colaborador.xhtml"></b:navLink>
+                        <b:navLink value="Colaborador Caso" href="colcaso.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                </b:dropMenu>
+                <b:navLink value="Calendario" iconAwesome="fa-calendar " href="calendario.xhtml"></b:navLink>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+
+            </form>
+
+
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink value="Cerrar sesión" href="index.xhtml"></b:navLink>
+
+            </b:navbarLinks>
+        </b:navBar>
+
+     
+        <b:jumbotron >
+
+            <b:row>
+                <b:image small-screen="one-third" value="../resources/img/ban.png"  />
+                <b:image small-screen="one-third" value="../resources/img/ban.png"  />
+                <b:image small-screen="one-third" hidden="tiny-screen" value="../resources/img/ban.png" />
+            </b:row>
+
+        </b:jumbotron>
+        <b:container>
+            <b:row>
+                <b:column col-md="4">
+                    <h2>Introducción</h2>
+                    <p>El Bufete Gomez Larios, fue fundado en 1981 trabajando Profesionales Socios y Fundadores: Lic. Jose Angel Gomez Larios, Licda. Sonia Arevalo. </p>
+                    <p><b:button outcome="" value="Detalles..»"/></p>
+                </b:column>
+                <b:column col-md="4">
+                    <h2>Misión</h2>
+                    <p>Prestar servicios profesionales en las diferentes ramas del derecho, de manera responsable, honesta, eficiente, y con un alto grado de prestigio, equidad y justicia, generando soluciones y alternativas confiables para nuestros clientes.
+
+                    </p>
+                    <p><b:button outcome="" value="Detalles..»"/></p>
+                </b:column>
+                <b:column col-md="4">
+                    <h2>Visión</h2>
+                    <p>Ser una firma líder con prestigio nacional e internacional innovadora, confiable y transparente, comprometida a facilitar y mejorar la calidad de vida nuestros clientes, ofreciendo oportunidades de desarrollo profesional y personal a nuestros integrantes. </p>
+                    <p><b:button outcome="" value="Detalles..»"/></p>
+                </b:column>
+            </b:row>
+            <hr/>
+
+        </b:container>
+        <b:navBar   class="lead" position="bottom"     inverse="true">
+            <b:navbarLinks >
+                <p style="color: gray">Copyright © 2017 Bufete Gómez Larios, Calle Circunvalacion y Av. La Revolucion No.101, Colonia San Benito San Salvador, El Salvador
+                    Telefono: (503) 2283-9000 / (505) 8918-1985 Fax: 2283-9001 / Email: bgllaw@gmail.com</p>
+            </b:navbarLinks>
+        </b:navBar>
+    </h:body>
+</html>
+

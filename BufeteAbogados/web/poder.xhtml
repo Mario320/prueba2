@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>PODER</title>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+        <h:outputScript name="js/alertify.js"/>
+    </h:head>
+    <h:body>
+        <b:navBar class="lead"  inverse="true" > 
+
+            <b:navbarLinks   >
+
+                <b:navLink   value="Bufete Abogados 'Gómez Larios'"  href="bienvenidos.xhtml"></b:navLink>
+
+                <b:navLink value="Usuarios"  style=" color: white" iconAwesome="fa-user" href="usuarios.xhtml"></b:navLink>
+
+                <b:dropMenu value="Formularios" iconAwesome="fa-id-card-o ">
+                    <b:navLink value="Bitacora" href="bitacora.xhtml"></b:navLink>
+                    <b:navLink value="Caso" href="caso.xhtml"></b:navLink>
+                    <b:navLink value="Cliente" href="cliente.xhtml"></b:navLink>
+                    <b:navLink value="Poder" href="poder.xhtml"></b:navLink>
+                    <b:dropMenu value="Colaborador"   iconAlign="right"  >
+                        <b:navLink value="Nuevo Colaborador " href="colaborador.xhtml"></b:navLink>
+                        <b:navLink value="Colaborador Caso" href="colcaso.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                </b:dropMenu>
+                <b:navLink value="Calendario" iconAwesome="fa-calendar " href="calendario.xhtml"></b:navLink>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+
+            </form>
+
+
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink value="Cerrar sesión" href="index.xhtml"></b:navLink>
+
+            </b:navbarLinks>
+        </b:navBar>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Registrar un nuevo poder</h2>
+                    <h:form id="miFormulario">
+                        <h:panelGroup layout="block" styleClass="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                            <h:messages  />
+                        </h:panelGroup>
+                        <h:panelGrid columns="4" styleClass="table">
+                            <h:outputLabel for="idPoder" value="id Poder:"/>
+                            <h:inputText id="idPoder" styleClass="form-control" value="#{poderBean.poderes.idPoder}" required="true" 
+                                         requiredMessage="Debes ingresar el id del poder otorgado" validatorMessage="id debe ser POD00000">
+                                <f:validateRegex pattern="POD[0-9]{5}"/>
+                            </h:inputText>
+                            <h:outputLabel for="poder" value="Poder:"/>
+                            <h:inputText id="poder" styleClass="form-control" value="#{poderBean.poderes.poder}" required="true" 
+                                         requiredMessage="Debes ingresar el nombre del poder"/>
+                            <h:outputLabel for="detalle" value="Detalle:"/>
+                            <h:inputTextarea id="detalle" styleClass="form-control" value="#{poderBean.poderes.detalle}" 
+                                             required="true" requiredMessage="Debes ingresar el detalle"/>
+                            <h:outputLabel for="otorgante" value="Otorgante:"/>
+                            <h:inputText id="otorgante" styleClass="form-control" value="#{poderBean.poderes.otorgante}" 
+                                         required="false" requiredMessage="Debes ingresar el otorgante"/>
+
+                            <h:outputLabel for="fecha" value="Fecha:"/>
+                            <h:inputText id="fecha" value="#{poderBean.poderes.fecha}" required="true" styleClass="form-control"
+                                         requiredMessage="Debes ingresar la fecha" validatorMessage="la fecha debe tener el formato yyyy/MM/dd" 
+                                         >
+                                <f:convertDateTime pattern="yyyy/MM/dd" />
+                            </h:inputText>
+                        </h:panelGrid>
+                        <h:commandButton  value="Guardar" styleClass="btn btn-success"
+                                          action="#{poderBean.guardarPoder()}" style="margin-right:10px"/>
+                        <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <h:form >
+                    <h:dataTable styleClass="table" value="#{poderBean.listaPoderes}" 
+                                 var="pod" rendered="#{poderBean.listaPoderes.size()>0}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="id Poder"/>
+                            </f:facet>
+                            <h:outputText value="#{pod.idPoder}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Poder"/>
+                            </f:facet>
+                            <h:outputText value="#{pod.poder}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Detalle"/>
+                            </f:facet>
+                            <h:outputText value="#{pod.detalle}"/>   
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Otorgante"/>
+                            </f:facet>
+                            <h:outputText value="#{pod.otorgante}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Fecha"/>
+                            </f:facet>
+                            <h:outputText value="#{pod.fecha}"/>
+                        </h:column>
+                    
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Operaciones"/>
+                            </f:facet>
+                          
+                            <h:commandButton value="Eliminar" styleClass="btn btn-danger" action="#{poderBean.eliminarPoder()}"
+                                             onclick="return confirmarEliminacion();">
+                                <f:param name="idPoder" value="#{pod.idPoder}"/>
+                            </h:commandButton>
+                              <p:commandButton update=":miFormulario" value="Modificar" styleClass="btn btn-info " >              
+                                <f:setPropertyActionListener value="#{pod}" target="${poderBean.poderes}" />
+                            </p:commandButton>
+                        </h:column>    
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+        <h:outputScript>
+            <c:if test = "#{not empty flash.exito}" >
+                alertify.success('#{flash.exito}');
+            </c:if>
+            function confirmarEliminacion(){
+            return confirm("Estas seguro que desea eliminar este registro?");
+            }
+        </h:outputScript>
+        
+        
+        
+
+
+    </h:body>
+</html>

@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>CASOS ASIGNADOS</title>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+        <h:outputScript name="js/alertify.js"/>
+    </h:head>
+    <h:body>
+
+        <b:navBar class="lead"  inverse="true" > 
+
+            <b:navbarLinks   >
+
+                <b:navLink   value="Bufete Abogados 'Gómez Larios'"  href="bienvenidos.xhtml"></b:navLink>
+
+                <b:navLink value="Usuarios"  style=" color: white" iconAwesome="fa-user" href="usuarios.xhtml"></b:navLink>
+
+                <b:dropMenu value="Formularios" iconAwesome="fa-id-card-o ">
+                    <b:navLink value="Bitacora" href="bitacora.xhtml"></b:navLink>
+                    <b:navLink value="Caso" href="caso.xhtml"></b:navLink>
+                    <b:navLink value="Cliente" href="cliente.xhtml"></b:navLink>
+                    <b:navLink value="Poder" href="poder.xhtml"></b:navLink>
+                    <b:dropMenu value="Colaborador"   iconAlign="right"  >
+                        <b:navLink value="Nuevo Colaborador " href="colaborador.xhtml"></b:navLink>
+                        <b:navLink value="Colaborador Caso" href="colcaso.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                </b:dropMenu>
+                <b:navLink value="Calendario" iconAwesome="fa-calendar " href="calendario.xhtml"></b:navLink>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+
+            </form>
+
+
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink value="Cerrar sesión" href="index.xhtml"></b:navLink>
+
+            </b:navbarLinks>
+        </b:navBar>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Asignar un nuevo colaborador al caso</h2>
+                    <h:form id="miFormulario">
+                        <h:panelGroup layout="block" styleClass="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                            <h:messages  />
+                        </h:panelGroup>
+                        <h:panelGrid columns="4" styleClass="table">
+                            <h:outputLabel for="idColCaso" value="id colCaso:"/>
+                            <h:inputText id="idColCaso" styleClass="form-control" value="#{colCasoBean.colcaso.idColaboradorCaso}" required="true" 
+                                         requiredMessage="Debes ingresar el id del progreso" validatorMessage="referencia no valida">
+                                <f:validateRegex pattern="CEC[0-9]{3}"/>
+                            </h:inputText>
+                            <h:outputLabel for="referencia" value="Referencia:"/>
+                            <h:inputText id="referencia" styleClass="form-control" value="#{colCasoBean.colcaso.referencia}" required="true" 
+                                         requiredMessage="Debes ingresar la referencia del caso" validatorMessage="referencia no valida">
+                                <f:validateRegex pattern="[0-9]{4}[0-9]{6}[0-9]{5}[0-9]{3}"/>
+                            </h:inputText>
+                            <h:outputLabel for="idColaborador" value="idColaborador"/>
+                            <h:inputText id="idColaborador" styleClass="form-control" value="#{colCasoBean.colcaso.idColaborador}" required="true" 
+                                         requiredMessage="Debes ingresar el id del colaborador" validatorMessage="id no valido">
+                                <f:validateRegex pattern="COL[0-9]{3}"/>
+                            </h:inputText>
+
+
+
+                        </h:panelGrid>
+                        <h:commandButton  value="Guardar" styleClass="btn btn-success"
+                                          action="#{colCasoBean.guardarColCaso()}" style="margin-right:10px"/>
+                        <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <h:form >
+                    <h:dataTable styleClass="table" value="#{colCasoBean.listaColCasos}" 
+                                 var="cec" rendered="#{colCasoBean.listaColCasos.size()>0}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel  value="Numero de Asignacion"/>
+                            </f:facet>
+                            <h:outputText value="#{cec.idColaboradorCaso}"/>   
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel  value="Referencia"/>
+                            </f:facet>
+                            <h:outputText value="#{cec.referencia}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Num Colaborador"/>
+                            </f:facet>
+                            <h:outputText value="#{cec.idColaborador}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Operaciones"/>
+                            </f:facet>
+                            <h:commandButton value="Eliminar" styleClass="btn btn-danger" action="#{colCasoBean.eliminarColCaso()}"
+                                             onclick="return confirmarEliminacion();">
+                                <f:param name="idBitacora" value="#{cec.idColaboradorCaso}"/>
+                            </h:commandButton>
+                                 <p:commandButton update=":miFormulario" value="Modificar" styleClass="btn btn-info " >              
+                                     <f:setPropertyActionListener value="#{cec}" target="${colCasoBean.colcaso}" />
+                            </p:commandButton>
+                            
+                        </h:column>    
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+        <h:outputScript>
+            <c:if test = "#{not empty flash.exito}" >
+                alertify.success('#{flash.exito}');
+            </c:if>
+            function confirmarEliminacion(){
+            return confirm("Estas seguro que desea eliminar este registro?");
+            }
+        </h:outputScript>
+
+    </h:body>
+</html>

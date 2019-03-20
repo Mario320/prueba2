@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Eventos</title>
+    </h:head>
+    <h:body>
+        <b:navBar class="lead"  inverse="true" > 
+
+            <b:navbarLinks   >
+
+                <b:navLink   value="Bufete Abogados 'Gómez Larios'"  href="bienvenidos.xhtml"></b:navLink>
+
+                <b:navLink value="Usuarios"  style=" color: white" iconAwesome="fa-user" href="usuarios.xhtml"></b:navLink>
+
+                <b:dropMenu value="Formularios" iconAwesome="fa-id-card-o ">
+                    <b:navLink value="Bitacora" href="bitacora.xhtml"></b:navLink>
+                    <b:navLink value="Caso" href="caso.xhtml"></b:navLink>
+                    <b:navLink value="Cliente" href="cliente.xhtml"></b:navLink>
+                    <b:navLink value="Poder" href="poder.xhtml"></b:navLink>
+                    <b:dropMenu value="Colaborador"   iconAlign="right"  >
+                        <b:navLink value="Nuevo Colaborador " href="colaborador.xhtml"></b:navLink>
+                        <b:navLink value="Colaborador Caso" href="colcaso.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                </b:dropMenu>
+                <b:navLink value="Calendario" iconAwesome="fa-calendar " href="calendario.xhtml"></b:navLink>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+
+            </form>
+
+
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink value="Cerrar sesión" href="index.xhtml"></b:navLink>
+
+            </b:navbarLinks>
+        </b:navBar>
+
+
+        <b:fullCalendar/>
+
+
+
+      
+    </h:body>
+</html>
+

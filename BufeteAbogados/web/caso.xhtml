@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>CASOS</title>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+        <h:outputScript name="js/alertify.js"/>
+    </h:head>
+    <h:body>
+        <b:navBar class="lead"  inverse="true" > 
+
+            <b:navbarLinks   >
+
+                <b:navLink   value="Bufete Abogados 'Gómez Larios'"  href="bienvenidos.xhtml"></b:navLink>
+
+                <b:navLink value="Usuarios"  style=" color: white" iconAwesome="fa-user" href="usuarios.xhtml"></b:navLink>
+
+                <b:dropMenu value="Formularios" iconAwesome="fa-id-card-o ">
+                    <b:navLink value="Bitacora" href="bitacora.xhtml"></b:navLink>
+                    <b:navLink value="Caso" href="caso.xhtml"></b:navLink>
+                    <b:navLink value="Cliente" href="cliente.xhtml"></b:navLink>
+                    <b:navLink value="Poder" href="poder.xhtml"></b:navLink>
+                    <b:dropMenu value="Colaborador"   iconAlign="right"  >
+                        <b:navLink value="Nuevo Colaborador " href="colaborador.xhtml"></b:navLink>
+                        <b:navLink value="Colaborador Caso" href="colcaso.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                </b:dropMenu>
+                <b:navLink value="Calendario" iconAwesome="fa-calendar " href="calendario.xhtml"></b:navLink>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+
+            </form>
+
+
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink value="Cerrar sesión" href="index.xhtml"></b:navLink>
+
+            </b:navbarLinks>
+        </b:navBar>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Registrar un nuevo Caso</h2>
+                    <h:form id="miFormulario">
+                        <h:panelGroup layout="block" styleClass="alert alert-danger" rendered="#{not empty facesContext.messageList}">
+                            <h:messages  />
+                        </h:panelGroup>
+                        <h:panelGrid columns="4" styleClass="table">
+                            <h:outputLabel for="referencia" value="Referencia:"/>
+                            <h:inputText id="referencia" styleClass="form-control" value="#{casoBean.caso.referencia}" required="true" 
+                                         requiredMessage="Debes ingresar la referencia del caso" validatorMessage="referencia no valida">
+                                <f:validateRegex pattern="[0-9]{5}-[0-9]{2}-[0-9]{4}-[0-9]{4}"/>
+                            </h:inputText>
+                            <h:outputLabel for="idCliente" value="idCliente:"/>
+                            <h:inputText id="idCliente" value="#{casoBean.caso.idCliente}" required="true" styleClass="form-control"
+                                         requiredMessage="Debes ingresar el id del cliente" validatorMessage="id del cliente debe tener el formato correcto" 
+                                         converterMessage=" el id del cliente debe tener el formato CLI00000">
+                                <f:validateRegex pattern="CLI[0-9]{5}"/>
+                            </h:inputText>
+                            <h:outputLabel for="titulo" value="Titulo:"/>
+                            <h:inputText id="titulo" styleClass="form-control" value="#{casoBean.caso.tituloCaso}" required="true" 
+                                         requiredMessage="Debes ingresar el titulo del caso"/>
+                            <h:outputLabel for="materia" value="Materia:"/>
+                            <h:inputText id="materia" styleClass="form-control" value="#{casoBean.caso.materia}" 
+                                         required="true" requiredMessage="Debes ingresar la materia del caso"/>
+                            <h:outputLabel for="juzgado" value="Juzgado:"/>
+                            <h:inputText id="juzgado" styleClass="form-control" value="#{casoBean.caso.juzgado}" required="true" 
+                                         requiredMessage="Debes ingresar el nombre del juzgado"/>
+
+                            <h:outputLabel for="juez" value="Num. Juez:"/>
+                            <h:inputText id="juez" value="#{casoBean.caso.numJuez}" required="true" styleClass="form-control"
+                                         requiredMessage="Debes ingresar el num de juez" validatorMessage="El numero debe ser mayor a 1" 
+                                         converterMessage="La edad debe ser númerica">
+                                <f:validateLongRange minimum="1" maximum="9999"/>
+                            </h:inputText>
+                            <h:outputLabel for="demandante" value="Demandante:"/>
+                            <h:inputText id="demandante" styleClass="form-control" value="#{casoBean.caso.demandante}" required="true" 
+                                         requiredMessage="Debes ingresar el nombre del demandante"/>
+                            <h:outputLabel for="demandado" value="Demandado:"/>
+                            <h:inputText id="demandado" styleClass="form-control" value="#{casoBean.caso.demandado}" required="true" 
+                                         requiredMessage="Debes ingresar el nombre del demandado"/>
+                            <h:outputLabel for="proceso" value="Proceso:"/>
+                            <h:inputText id="proceso" styleClass="form-control" value="#{casoBean.caso.proceso}" required="true" 
+                                         requiredMessage="Debes ingresar el tipo de proceso"/>
+                            <h:outputLabel for="jurisprudencia" value="Jurisprudencia:"/>
+                            <h:inputText id="jurisprudencia" styleClass="form-control" value="#{casoBean.caso.jurisprudencia}" required="true" 
+                                         requiredMessage="Debes ingresar el tipo de jurisprudencia"/> <!-- No lleva validacion porquie varia en el tqamaño del campo-->
+                            <h:outputLabel for="detalle" value="Detalle:"/>
+                            <h:inputTextarea id="detallee" styleClass="form-control" value="#{casoBean.caso.detalleCaso}" required="false" 
+                                             requiredMessage="Debes ingresar el detalle del caso"/>
+                            <h:outputLabel for="refext" value="Ref. Externa:"/>
+                            <h:inputText id="refext" styleClass="form-control" value="#{casoBean.caso.referenciaExterna}" required="false" 
+                                         requiredMessage="Ingrese referencia externa"/>
+                            <h:outputLabel for="fechai" value="Inicio:"/>
+                            <h:inputText id="fechai" styleClass="form-control"  value="#{casoBean.caso.fechaInicio}" required="true" 
+                                         requiredMessage="Ingrese fecha de inicio">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:inputText>
+
+                            <h:outputLabel for="fechaf" value="Finaliza:"/>
+                            <h:inputText id="fechaf" styleClass="form-control"  value="#{casoBean.caso.fechaFin}" required="false" 
+                                         requiredMessage="Ingrese fecha de finalizacion">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:inputText>
+
+
+
+                        </h:panelGrid>
+                        <h:commandButton  value="Guardar" styleClass="btn btn-success"
+                                          action="#{casoBean.guardarCaso()}" style="margin-right:10px"/>
+                        <h:commandButton type="reset" value="Limpiar" styleClass="btn btn-danger"/>
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <h:form >
+                    <h:dataTable styleClass="table" value="#{casoBean.listaCasos}" 
+                                 var="cas" rendered="#{casoBean.listaCasos.size()>0}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel for="referencia" value="Referencia"/>
+                            </f:facet>
+                            <h:outputText value="#{cas.referencia}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel for="idCliente" value="IdCliente"/>
+                            </f:facet>
+                            <h:outputText value="#{cas.idCliente}"/>   
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel for="fechai" value="Inicio:"/>
+                            </f:facet>
+                            <h:outputText value="#{cas.fechaInicio}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputLabel value="Operaciones"/>
+                            </f:facet>
+                            
+                            <h:commandButton value="Eliminar" styleClass="btn btn-danger" action="#{casoBean.eliminarCaso()}"
+                                             onclick="return confirmarEliminacion();">
+                                <f:param name="idColaborador" value="#{col.idColaborador}"/>
+                            </h:commandButton>
+                           <p:commandButton update=":miFormulario" value="Modificar" styleClass="btn btn-info " >              
+                               <f:setPropertyActionListener value="#{cas}" target="${casoBean.caso}" />
+                            </p:commandButton>
+                            <h:commandButton value="Detalle" styleClass="btn btn-primary" action="">
+                                <f:param name="referencia" value="#{bit.referencia}"/>
+                            </h:commandButton>
+                        </h:column>    
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+        <h:outputScript>
+            <c:if test = "#{not empty flash.exito}" >
+                alertify.success('#{flash.exito}');
+            </c:if>
+            function confirmarEliminacion(){
+            return confirm("Estas seguro que desea eliminar este registro?");
+            }
+        </h:outputScript>
+
+
+
+        
+    </h:body>
+</html>

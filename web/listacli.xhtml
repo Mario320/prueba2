@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>CLIENTES</title>
+        <h:outputStylesheet name="css/bootstrap.min.css" />
+        <h:outputStylesheet name="css/alertify.core.css" />
+        <h:outputStylesheet name="css/alertify.default.css" />
+        <h:outputScript name="js/alertify.js"/>
+    </h:head>
+    <h:body rendered="${loginBean.verificarSesion()}">
+        <b:navBar class="lead"  inverse="true" brand="GL" brandHref="bienvenidos.xhtml" > 
+
+           <b:navbarLinks>
+
+                <b:navLink rendered="${sessionScope.tipoUsuario eq 'ADM'}"  value="Usuarios"  style=" color: white" iconAwesome="fa-user"  iconAlign="right" href="usuarios.xhtml"></b:navLink>
+
+                
+                    
+                    <b:dropMenu  iconAwesome="fa-archive" value="Caso"   iconAlign="right">
+                        <b:navLink value="Registrar Casos" iconAwesome="fa-folder-open" href="caso.xhtml"></b:navLink>
+                        <b:navLink value="Casos" iconAwesome="fa-book" href="listac.xhtml">
+                           
+                        </b:navLink>
+                    </b:dropMenu>
+                        
+                        
+                     <b:dropMenu value="Cliente"  iconAwesome="fa-id-card-o" iconAlign="right">
+                        <b:navLink value="Nuevo Cliente " href="cliente.xhtml" iconAwesome="fa-address-card-o"></b:navLink>
+                        <b:navLink value="Poder" iconAwesome="fa-gavel" href="poder.xhtml"></b:navLink>
+                        <b:navLink value="Cartera de Clientes" iconAwesome="fa-address-book-o" href="listacli.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                        
+                       
+                <b:dropMenu  iconAwesome="fa-university" value="Bufete"   iconAlign="right" >
+                        <b:navLink value="Nuevo Colaborador " iconAwesome="fa-id-badge" href="colaborador.xhtml"></b:navLink>
+                       <b:navLink value="Registro Colaboradores" iconAwesome="fa-id-badge" href="listacol.xhtml"></b:navLink>
+                        <b:navLink value="Asignar Colaborador" iconAwesome="fa-suitcase" href="colcaso.xhtml"></b:navLink>
+                    </b:dropMenu> 
+                
+                <b:navLink value="Calendario" iconAwesome="fa-calendar " href="calendario.xhtml" iconAlign="right"></b:navLink>
+            </b:navbarLinks>
+            <form class="navbar-form navbar-left hidden-md hidden-sm hidden-xs" role="search">
+
+            </form>
+
+
+            <b:navbarLinks pull="right" styleClass="hidden-xs">
+                <b:navLink value="Salir" href="index.xhtml">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </b:navLink>
+
+            </b:navbarLinks>
+        </b:navBar>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h2>Cartera de Clientes</h2>
+                    
+                </div>
+            </div>
+            <div class="row">
+               <h:form >
+                   
+                    <b:dataTable  value="#{clienteBean.listaClientes}" 
+                                  var="cli" rendered="#{clienteBean.listaClientes.size()>0}" responsive="true">
+                            
+                            <b:dataTableColumn value="#{cli.di}" label="Documento de Identidad"/>
+                            <b:dataTableColumn value="#{cli.nombre}"/>   
+                            <b:dataTableColumn value="#{cli.apellido}"/>
+                            <b:dataTableColumn value="#{cli.representanteLegal}" label="Representante"/>
+                            <b:dataTableColumn value="#{cli.correo}"/>
+                            <b:dataTableColumn value="#{cli.telefono}" />
+                            <b:dataTableColumn value="#{cli.direccion}"/>
+                            <b:dataTableColumn label="Operaciones">
+                                 <h:commandButton rendered="${sessionScope.tipoUsuario eq 'ADM'}" value="Eliminar" styleClass="btn btn-danger" action="#{clienteBean.eliminarCliente()}"
+                                             onclick="return confirmarEliminacion();">
+                                <f:param name="idCliente" value="#{cli.idCliente}"/>
+                                 </h:commandButton>
+                                <h:commandLink action="#{clienteBean.llenar}">  
+                            <f:param name="idCliente" value="#{cli.idCliente}"/>
+                            <div class="bigbutton">Modificar</div>
+                                </h:commandLink> 
+                                
+                                
+                           
+                            </b:dataTableColumn>
+                     </b:dataTable>
+                  
+                </h:form>
+
+            </div>
+        </div>
+        <h:outputScript>
+            <c:if test = "#{not empty flash.exito}" >
+                alertify.success('#{flash.exito}');
+            </c:if>
+            function confirmarEliminacion(){
+            return confirm("Estas seguro que desea eliminar este registro?");
+            }
+        </h:outputScript>
+       
+      
+    </h:body>
+</html>
